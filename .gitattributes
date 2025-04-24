@@ -3,3 +3,6 @@
 OtherData/UserReviewsData/*.csv filter=lfs diff=lfs merge=lfs -text
 OtherData/AppIdData/*.csv filter=lfs diff=lfs merge=lfs -text
 OtherData/AppInfoData/*.csv filter=lfs diff=lfs merge=lfs -text
+OtherData/UserReviewsData/*.zip filter=lfs diff=lfs merge=lfs -text
+OtherData/AppIdData/*.zip filter=lfs diff=lfs merge=lfs -text
+OtherData/AppInfoData/*.zip filter=lfs diff=lfs merge=lfs -text
