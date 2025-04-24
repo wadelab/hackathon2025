@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Spending Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+    
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2.5rem;
+            color: #444;
+        }
+    
+        p {
+            text-align: center;
+            margin: 10px 0 20px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+            /* Tab Styles */
+    .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        background-color: #007bff;
+        border-bottom: 2px solid #0056b3;
+    }
+
+    .tab-button {
+        flex: 1;
+        padding: 15px 20px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        font-size: 1rem;
+        text-align: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .tab-button:hover {
+        background-color: #0056b3;
+    }
+
+    .tab-button.active {
+        background-color: #0056b3;
+        font-weight: bold;
+    }
+
+    /* Tab Content Styles */
+    .tab-content {
+        display: none;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+        max-width: 90%;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+    
+            /* Config Button */
+    .config-button-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    #configButton {
+        padding: 10px 15px;
+        font-size: 1rem;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #configButton:hover {
+        background-color: #0056b3;
+    }
+
+    /* Config Panel */
+    .config-panel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        width: 400px;
+        max-width: 90%;
+    }
+
+    .config-panel.hidden {
+        display: none;
+    }
+
+    .config-panel h2 {
+        margin-top: 0;
+        font-size: 1.5rem;
+        color: #333;
+        text-align: center;
+    }
+
+    .config-panel label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        color: #333;
+    }
+
+    .config-panel .input-group {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .input-group label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        color: #333;
+    }
+
+    .config-panel input[type="file"],
+    .config-panel input[type="range"],
+    .config-panel input[type="text"],
+    .config-panel input[type="number"],
+    .config-panel button:not(.close-button) {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .config-panel input[type="range"] {
+        margin-bottom: 5px;
+    }
+
+    .config-panel button:not(.close-button) {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .config-panel button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Close Button */
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #fff;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        border-radius: 5px;
+        background-color: red;
+    }
+
+    .close-button:hover {
+        color: #808080!important;
+        background-color: darkred!important;
+
+    }
+    </style>
+</head>
+
+<body>
+    <h1>Game Spending Visualization</h1>
+    <p>Analyze in-game spending patterns and identify the most predatory games.</p>
+
+    <!-- Config Button -->
+    <div class="config-button-container">
+        <button id="configButton">Config</button>
+    </div>
+
+    <!-- Config panel -->
+    <div id="configPanel" class="config-panel hidden">
+        <button id="closeConfigButton" class="close-button">&times;</button>
+        <h2>Configuration</h2>
+        <div class="input-group">
+            <label for="csvUrlInput">CSV URL:</label>
+            <input type="text" id="csvUrlInput" value="https://raw.githubusercontent.com/wadelab/hackathon2025/refs/heads/main/Data%20Visualization/sorted_data.csv" />
+        </div>
+        <div class="input-group">
+            <label for="csvFileInput">Or Upload CSV:</label>
+            <input type="file" id="csvFileInput" accept=".csv" />
+        </div>
+        <div class="input-group">
+            <label for="thresholdSlider">Gambling Score Threshold: <span id="thresholdValue">3</span></label>
+            <input type="range" id="thresholdSlider" min="1" max="5" step="0.1" value="3" />            
+        </div>
+        <div class="input-group">
+            <label for="itemCountThreshold">Item Count Threshold:</label>
+            <input type="number" id="itemCountThreshold" value=1 />
+        </div>
+        <div class="input-group">
+            <button id="reloadButton">Reload</button>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-button" onclick="showTab('gamblingGamesTab')">Gambling Identified Games</button>
+        <button class="tab-button" onclick="showTab('spendingChartTab')">Total Spending Per Game</button>
+        <button class="tab-button" onclick="showTab('offendersChartTab')">Worst Offenders</button>
+        <button class="tab-button" onclick="showTab('gamblingScoresChartTab')">Gambling Scores</button>
+        <button class="tab-button" onclick="showTab('gamblingAmountsComparisonChartTab')">Gambling vs Non-Gambling</button>
+    </div>
+
+    <div id="gamblingGamesTab" class="tab-content">
+        <canvas id="gamblingGames"></canvas>
+    </div>
+    <div id="spendingChartTab" class="tab-content" style="display: none;">
+        <canvas id="spendingChart"></canvas>
+    </div>
+    <div id="offendersChartTab" class="tab-content" style="display: none;">
+        <canvas id="offendersChart"></canvas>
+    </div>
+    <div id="gamblingScoresChartTab" class="tab-content" style="display: none;">
+        <canvas id="gamblingScoresChart"></canvas>
+    </div>
+    <div id="gamblingAmountsComparisonChartTab" class="tab-content" style="display: none;">
+        <canvas id="gamblingAmountsComparisonChart"></canvas>
+    </div>
+
+    <script>
+        //global variables
+        var gamblingScoreThreshold;
+        var purchaseCountThreshold; // Define a threshold for purchase count
+
+    </script>
+    <script>
+        const configButton = document.getElementById('configButton');
+        const closeConfigButton = document.getElementById('closeConfigButton');
+        const configPanel = document.getElementById('configPanel');
+        const csvUrlInput = document.getElementById('csvUrlInput');
+        const csvFileInput = document.getElementById('csvFileInput');
+        const thresholdSlider = document.getElementById('thresholdSlider');
+        const thresholdValue = document.getElementById('thresholdValue');
+        const itemCountThreshold = document.getElementById('itemCountThreshold');
+        const reloadButton = document.getElementById('reloadButton');
+    
+        gamblingScoreThreshold = parseInt(thresholdSlider.value);
+        purchaseCountThreshold = parseInt(itemCountThreshold.value);
+    
+        // Toggle config panel visibility
+        configButton.addEventListener('click', () => {
+            configPanel.classList.toggle('hidden');
+        });
+
+        // Toggle config panel visibility
+        closeConfigButton.addEventListener('click', () => {
+            configPanel.classList.add('hidden');
+        });
+    
+        // Update threshold value display
+        thresholdSlider.addEventListener('input', () => {
+            thresholdValue.textContent = thresholdSlider.value;
+            gamblingScoreThreshold = parseInt(thresholdSlider.value);
+        });
+
+        purchaseCountThreshold,addEventListener('input', () => {
+            purchaseCountThreshold = parseInt(itemCountThreshold.value);
+        });
+    
+        // Automatically load CSV when file is uploaded
+        csvFileInput.addEventListener('change', () => {
+            if (csvFileInput.files.length > 0) {
+                const file = csvFileInput.files[0];
+                Papa.parse(file, {
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: (results) => {
+                        const data = results.data;
+                        displayCharts(data);
+                    },
+                });
+            }
+        });
+
+    // Reload button functionality
+    reloadButton.addEventListener('click', () => {
+        const csvUrl = csvUrlInput.value.trim();
+
+        if (csvUrl) {
+            // If a URL is provided, fetch the CSV from the URL
+            fetch(csvUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch the CSV file from the URL.');
+                    }
+                    return response.text();
+                })
+                .then(csvText => {
+                    const results = Papa.parse(csvText, {
+                        header: true,
+                        skipEmptyLines: true,
+                    });
+                    displayCharts(results.data);
+                })
+                .catch(error => {
+                    alert(`Error: ${error.message}`);
+                });
+        } else if (csvFileInput.files.length > 0) {
+            // If no URL is provided, use the uploaded file
+            const file = csvFileInput.files[0];
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: (results) => {
+                    displayCharts(results.data);
+                },
+            });
+        } else {
+            alert('Please provide a CSV URL or upload a CSV file.');
+        }
+    });
+    </script>
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.style.display = 'none');
+    
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+    
+            // Show the selected tab and mark the button as active
+            document.getElementById(tabId).style.display = 'block';
+            event.target.classList.add('active');
+        }
+    
+        // Show the first tab by default
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.tab-button').click();
+        });
+    </script>
+    <script src="data_parsing.js"></script>
+    <script>
+        let gamblingGames, gamblingChart, offendersChart, gamblingScoresChart, gamblingAmountsComparisonChart;
+
+        document.getElementById('reloadButton').addEventListener('click', () => {
+
+            gamblingScoreThreshold = parseInt(document.getElementById('gamblingScoreThresholdInput').value);
+            console.log(gamblingScoreThreshold);
+
+            const fileInput = document.getElementById('csvFileInput');
+            if (fileInput.files.length === 0) {
+                alert('Please select a CSV file first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+
+            var data = [];
+
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: (results) => {
+                    data = results.data; 
+                    console.log(data);
+                    displayCharts(data);
+                },
+            });
+
+            
+
+        });
+
+        function displayCharts(data) {
+            const aggregatedData = aggregateGamblingData(data);
+
+            //get data where games have a gambling associated name and a score of 4 or more
+            const namedGamblingData = aggregatedData.filter(item => (item.weightedScore >= 4 && /casino|slot|gambling|poker|money/i.test(item.gameName)));
+
+            displayGamblingGames(namedGamblingData);
+
+            // Filter out games with scores <= 1
+            const filteredData = aggregatedData.filter(item => item.purchaseAmount > 1000).sort((a, b) => b.purchaseAmount - a.purchaseAmount);
+
+            var totalGamblingMoneySpent = 0;
+            namedGamblingData.forEach(element => {
+                totalGamblingMoneySpent += element.purchaseAmount;
+            });
+            filteredData.unshift({ gameName: "Total Gambling Money Spent", purchaseAmount: totalGamblingMoneySpent, weightedScore: 0 });
+            // Display the main gambling chart
+            displayGamblingChart(filteredData);
+
+            // Filter out games containing "casino", "slot", or "gambling" and ensure more than 1 purchase
+            const topOffenders = aggregatedData
+                .filter(item => !/casino|slot|gambling|poker|money/i.test(item.gameName)) // Exclude specific words
+                .filter(item => item.purchaseCount > 1) // Include only games with more than 1 purchase
+                .filter(item => item.weightedScore >= 4) // Include only games with a score > 1
+            //.slice(0, 20); // Get the top 20 games
+
+            // Display the top 20 worst offenders
+            displayOffendersChart(topOffenders);
+
+            const scoreComparison = aggregateGamblingVsNonGambling(aggregatedData)
+            console.log(scoreComparison);
+
+            displayGamblingScoresChart(scoreComparison.gambling, scoreComparison.nonGambling);
+
+        }
+
+
+
+        function displayGamblingGames(gamblingData) {
+
+            if (gamblingGames) gamblingGames.destroy();
+            const ctx = document.getElementById('gamblingGames').getContext('2d');
+            gamblingGames = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: gamblingData.map(item => item.gameName),
+                    datasets: [{
+                        label: 'Weighted Gambling Score',
+                        data: gamblingData.map(item => item.weightedScore),
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: true,
+                    indexAxis: 'y'
+                }
+
+            });
+
+        }
+
+        function displayGamblingChart(aggregatedData) {
+            if (gamblingChart) gamblingChart.destroy();
+
+            const ctx = document.getElementById('spendingChart').getContext('2d');
+            gamblingChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: aggregatedData.map(item => item.gameName),
+                    datasets: [{
+                        label: 'Money spent per game',
+                        data: aggregatedData.map(item => item.purchaseAmount),
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y'
+                }
+            });
+        }
+
+        function displayOffendersChart(topOffenders) {
+            if (offendersChart) offendersChart.destroy();
+
+            const ctx = document.getElementById('offendersChart').getContext('2d');
+            offendersChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: topOffenders.map(item => item.gameName),
+                    datasets: [{
+                        label: 'Top Gambling Scores (More than 1 Purchase)',
+                        data: topOffenders.map(item => item.weightedScore),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y'
+
+                }
+            });
+        }
+
+        function displayGamblingScoresChart(gamglingData, nonGamblingData) {
+            if (gamblingScoresChart) gamblingScoresChart.destroy();
+            if (gamblingAmountsComparisonChart) gamblingAmountsComparisonChart.destroy();
+
+            totalGamblingMoneySpent = 0;
+            totalnonGamblingMoneySpent = 0;
+
+            gamglingData.forEach(element => {
+                totalGamblingMoneySpent += element.purchaseAmount;
+            });
+
+            nonGamblingData.forEach(element => {
+                totalnonGamblingMoneySpent += element.purchaseAmount;
+            });
+
+            const ctx = document.getElementById('gamblingScoresChart').getContext('2d');
+            gamblingScoresChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    //labels: [gamglingData.map(item => item.gameName), nonGamblingData.map(item => item.gameName)],
+                    datasets: [{
+                        label: 'Gambling flagged games',
+                        data: gamglingData.map(item => ({x:item.weightedScore, y: item.gameName})),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },{
+                    label: 'non gambling flagged games',
+                        data: nonGamblingData.map(item => ({x:item.weightedScore, y: item.gameName})),
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                }]
+                },
+                options: {
+                    indexAxis: 'y'
+
+                }
+            });
+
+            //gamblingAmountsComparisonChart
+            const ctx2 = document.getElementById('gamblingAmountsComparisonChart').getContext('2d');
+            gamblingAmountsComparisonChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Gambling flagged games', 'non gambling flagged games'],
+                    datasets: [{
+                        label: 'Total Money Spent',
+                        data: [totalGamblingMoneySpent, totalnonGamblingMoneySpent],
+                        backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+                        borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y'
+
+                }
+            });
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const csvUrl = csvUrlInput.value.trim();
+            if (csvUrl) {
+                fetch(csvUrl)
+                    .then(response => response.text())
+                    .then(csvText => {
+                        const results = Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                        });
+                        displayCharts(results.data);
+                    })
+                    .catch(error => {
+                        alert(`Error: ${error.message}`);
+                    });
+            }
+        });
+    </script>
+</body>
+
+</html>
