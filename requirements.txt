@@ -1,0 +1,8 @@
+ipykernel # Jupyter
+google-play-scraper # Scraping user reviews
+pandas # Data processing
+simplejson # Parsing JSON
+swiftshadow # Proxy rotation while scraping
+tqdm # Progress bars for readability
+cdifflib # To get closest matches when searching an app name on Play Store
+requests[socks] # For sending HTTP requests over SOCKS
