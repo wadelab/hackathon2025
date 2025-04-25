@@ -16,14 +16,14 @@
             background-color: #f9f9f9;
             color: #333;
         }
-    
+
         h1 {
             text-align: center;
             margin: 20px 0;
             font-size: 2.5rem;
             color: #444;
         }
-    
+
         p {
             text-align: center;
             margin: 10px 0 20px;
@@ -31,171 +31,228 @@
             color: #666;
         }
 
-            /* Tab Styles */
-    .tabs {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-        background-color: #007bff;
-        border-bottom: 2px solid #0056b3;
-    }
+        /* Tab Styles */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            background-color: #007bff;
+            border-bottom: 2px solid #0056b3;
+        }
 
-    .tab-button {
-        flex: 1;
-        padding: 15px 20px;
-        cursor: pointer;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        font-size: 1rem;
-        text-align: center;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+        .tab-button {
+            flex: 1;
+            padding: 15px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-    .tab-button:hover {
-        background-color: #0056b3;
-    }
+        .tab-button:hover {
+            background-color: #0056b3;
+        }
 
-    .tab-button.active {
-        background-color: #0056b3;
-        font-weight: bold;
-    }
+        .tab-button.active {
+            background-color: #0056b3;
+            font-weight: bold;
+        }
 
-    /* Tab Content Styles */
-    .tab-content {
-        display: none;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin: 0 auto;
-        max-width: 90%;
-    }
+        /* Tab Content Styles */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            max-width: 100%;
+        }
 
-    .tab-content.active {
-        display: block;
-    }
-    
-            /* Config Button */
-    .config-button-container {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-    }
+        .tab-content.active {
+            display: block;
+        }
 
-    #configButton {
-        padding: 10px 15px;
-        font-size: 1rem;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+        /* Config Button */
+        .config-button-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
 
-    #configButton:hover {
-        background-color: #0056b3;
-    }
+        #configButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            height: 40px;
+            width: 40px;
+        }
 
-    /* Config Panel */
-    .config-panel {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        width: 400px;
-        max-width: 90%;
-    }
+        #configButton:hover {
+            background-color: #0056b3;
+        }
 
-    .config-panel.hidden {
-        display: none;
-    }
+        /* Config Panel */
+        .config-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 400px;
+            max-width: 90%;
+        }
 
-    .config-panel h2 {
-        margin-top: 0;
-        font-size: 1.5rem;
-        color: #333;
-        text-align: center;
-    }
+        .config-panel.hidden {
+            display: none;
+        }
 
-    .config-panel label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 0.9rem;
-        color: #333;
-    }
+        .config-panel h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
 
-    .config-panel .input-group {
-        margin-bottom: 15px;
-        width: 100%;
-    }
+        .config-panel label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #333;
+        }
 
-    .input-group label {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 5px;
-        font-size: 0.9rem;
-        color: #333;
-    }
+        .config-panel .input-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
 
-    .config-panel input[type="file"],
-    .config-panel input[type="range"],
-    .config-panel input[type="text"],
-    .config-panel input[type="number"],
-    .config-panel button:not(.close-button) {
-        width: 100%;
-        padding: 10px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-        box-sizing: border-box;
-    }
+        .input-group label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #333;
+        }
 
-    .config-panel input[type="range"] {
-        margin-bottom: 5px;
-    }
+        .config-panel input[type="file"],
+        .config-panel input[type="range"],
+        .config-panel input[type="text"],
+        .config-panel input[type="number"],
+        .config-panel button:not(.close-button) {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            box-sizing: border-box;
+        }
 
-    .config-panel button:not(.close-button) {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+        .config-panel input[type="range"] {
+            margin-bottom: 5px;
+        }
 
-    .config-panel button:hover {
-        background-color: #0056b3;
-    }
+        .config-panel button:not(.close-button) {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    /* Close Button */
-    .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: #fff;
-        cursor: pointer;
-        transition: color 0.3s ease;
-        border-radius: 5px;
-        background-color: red;
-    }
+        .config-panel button:hover {
+            background-color: #0056b3;
+        }
 
-    .close-button:hover {
-        color: #808080!important;
-        background-color: darkred!important;
+        /* Close Button */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            border-radius: 5px;
+            background-color: red;
+        }
 
-    }
+        .close-button:hover {
+            color: #808080 !important;
+            background-color: darkred !important;
+
+        }
+
+        /* Responsive Menu */
+        .menu {
+            display: none;
+            flex-direction: column;
+            background-color: #007bff;
+            padding: 10px;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .menu .tab-button {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .menu-toggle {
+            display: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+        }
+
+        .menu-toggle:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tabs {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .tab-content {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -205,8 +262,13 @@
 
     <!-- Config Button -->
     <div class="config-button-container">
-        <button id="configButton">Config</button>
+        <!--button id="configButton">Config</button-->
+        <button id="configButton">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.255 4.18806C9.84269 5.17755 8.68655 5.62456 7.71327 5.17535C6.10289 4.4321 4.4321 6.10289 5.17535 7.71327C5.62456 8.68655 5.17755 9.84269 4.18806 10.255C2.63693 10.9013 2.63693 13.0987 4.18806 13.745C5.17755 14.1573 5.62456 15.3135 5.17535 16.2867C4.4321 17.8971 6.10289 19.5679 7.71327 18.8246C8.68655 18.3754 9.84269 18.8224 10.255 19.8119C10.9013 21.3631 13.0987 21.3631 13.745 19.8119C14.1573 18.8224 15.3135 18.3754 16.2867 18.8246C17.8971 19.5679 19.5679 17.8971 18.8246 16.2867C18.3754 15.3135 18.8224 14.1573 19.8119 13.745C21.3631 13.0987 21.3631 10.9013 19.8119 10.255C18.8224 9.84269 18.3754 8.68655 18.8246 7.71327C19.5679 6.10289 17.8971 4.4321 16.2867 5.17535C15.3135 5.62456 14.1573 5.17755 13.745 4.18806C13.0987 2.63693 10.9013 2.63693 10.255 4.18806Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="#ffffff" stroke-width="2"></path> </g></svg>
+                </button>
     </div>
+
+    
 
     <!-- Config panel -->
     <div id="configPanel" class="config-panel hidden">
@@ -214,7 +276,8 @@
         <h2>Configuration</h2>
         <div class="input-group">
             <label for="csvUrlInput">CSV URL:</label>
-            <input type="text" id="csvUrlInput" value="https://raw.githubusercontent.com/wadelab/hackathon2025/refs/heads/main/Data%20Visualization/sorted_data.csv" />
+            <input type="text" id="csvUrlInput"
+                value="https://raw.githubusercontent.com/wadelab/hackathon2025/refs/heads/main/Data%20Visualization/sorted_data.csv" />
         </div>
         <div class="input-group">
             <label for="csvFileInput">Or Upload CSV:</label>
@@ -222,7 +285,7 @@
         </div>
         <div class="input-group">
             <label for="thresholdSlider">Gambling Score Threshold: <span id="thresholdValue">3</span></label>
-            <input type="range" id="thresholdSlider" min="1" max="5" step="0.1" value="3" />            
+            <input type="range" id="thresholdSlider" min="1" max="5" step="0.1" value="3" />
         </div>
         <div class="input-group">
             <label for="itemCountThreshold">Item Count Threshold:</label>
@@ -233,12 +296,26 @@
         </div>
     </div>
 
+    <!-- Menu Toggle Button -->
+    <button id="menuToggle" class="menu-toggle">Select Chart</button>
+
+
     <div class="tabs">
         <button class="tab-button" onclick="showTab('gamblingGamesTab')">Gambling Identified Games</button>
         <button class="tab-button" onclick="showTab('spendingChartTab')">Total Spending Per Game</button>
         <button class="tab-button" onclick="showTab('offendersChartTab')">Worst Offenders</button>
         <button class="tab-button" onclick="showTab('gamblingScoresChartTab')">Gambling Scores</button>
-        <button class="tab-button" onclick="showTab('gamblingAmountsComparisonChartTab')">Gambling vs Non-Gambling</button>
+        <button class="tab-button" onclick="showTab('gamblingAmountsComparisonChartTab')">Gambling vs
+            Non-Gambling</button>
+    </div>
+
+    <div id="menu" class="menu">
+        <button class="tab-button" onclick="showTab('gamblingGamesTab')">Gambling Identified Games</button>
+        <button class="tab-button" onclick="showTab('spendingChartTab')">Total Spending Per Game</button>
+        <button class="tab-button" onclick="showTab('offendersChartTab')">Worst Offenders</button>
+        <button class="tab-button" onclick="showTab('gamblingScoresChartTab')">Gambling Scores</button>
+        <button class="tab-button" onclick="showTab('gamblingAmountsComparisonChartTab')">Gambling vs
+            Non-Gambling</button>
     </div>
 
     <div id="gamblingGamesTab" class="tab-content">
@@ -264,6 +341,9 @@
 
     </script>
     <script>
+
+
+
         const configButton = document.getElementById('configButton');
         const closeConfigButton = document.getElementById('closeConfigButton');
         const configPanel = document.getElementById('configPanel');
@@ -273,10 +353,10 @@
         const thresholdValue = document.getElementById('thresholdValue');
         const itemCountThreshold = document.getElementById('itemCountThreshold');
         const reloadButton = document.getElementById('reloadButton');
-    
+
         gamblingScoreThreshold = parseInt(thresholdSlider.value);
         purchaseCountThreshold = parseInt(itemCountThreshold.value);
-    
+
         // Toggle config panel visibility
         configButton.addEventListener('click', () => {
             configPanel.classList.toggle('hidden');
@@ -286,17 +366,17 @@
         closeConfigButton.addEventListener('click', () => {
             configPanel.classList.add('hidden');
         });
-    
+
         // Update threshold value display
         thresholdSlider.addEventListener('input', () => {
             thresholdValue.textContent = thresholdSlider.value;
             gamblingScoreThreshold = parseInt(thresholdSlider.value);
         });
 
-        purchaseCountThreshold,addEventListener('input', () => {
+        purchaseCountThreshold, addEventListener('input', () => {
             purchaseCountThreshold = parseInt(itemCountThreshold.value);
         });
-    
+
         // Automatically load CSV when file is uploaded
         csvFileInput.addEventListener('change', () => {
             if (csvFileInput.files.length > 0) {
@@ -312,63 +392,79 @@
             }
         });
 
-    // Reload button functionality
-    reloadButton.addEventListener('click', () => {
-        const csvUrl = csvUrlInput.value.trim();
+        // Reload button functionality
+        reloadButton.addEventListener('click', () => {
+            const csvUrl = csvUrlInput.value.trim();
 
-        if (csvUrl) {
-            // If a URL is provided, fetch the CSV from the URL
-            fetch(csvUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch the CSV file from the URL.');
-                    }
-                    return response.text();
-                })
-                .then(csvText => {
-                    const results = Papa.parse(csvText, {
-                        header: true,
-                        skipEmptyLines: true,
+            if (csvUrl) {
+                // If a URL is provided, fetch the CSV from the URL
+                fetch(csvUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch the CSV file from the URL.');
+                        }
+                        return response.text();
+                    })
+                    .then(csvText => {
+                        const results = Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                        });
+                        displayCharts(results.data);
+                    })
+                    .catch(error => {
+                        alert(`Error: ${error.message}`);
                     });
-                    displayCharts(results.data);
-                })
-                .catch(error => {
-                    alert(`Error: ${error.message}`);
+            } else if (csvFileInput.files.length > 0) {
+                // If no URL is provided, use the uploaded file
+                const file = csvFileInput.files[0];
+                Papa.parse(file, {
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: (results) => {
+                        displayCharts(results.data);
+                    },
                 });
-        } else if (csvFileInput.files.length > 0) {
-            // If no URL is provided, use the uploaded file
-            const file = csvFileInput.files[0];
-            Papa.parse(file, {
-                header: true,
-                skipEmptyLines: true,
-                complete: (results) => {
-                    displayCharts(results.data);
-                },
-            });
-        } else {
-            alert('Please provide a CSV URL or upload a CSV file.');
-        }
-    });
+            } else {
+                alert('Please provide a CSV URL or upload a CSV file.');
+            }
+        });
     </script>
     <script>
+
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
+
+        // Toggle menu visibility
+        menuToggle.addEventListener('click', () => {
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Close menu when a tab is selected
+        menu.addEventListener('click', () => {
+            menu.style.display = 'none';
+        });
+
         function showTab(tabId) {
             // Hide all tab contents
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => tab.style.display = 'none');
-    
+
             // Remove active class from all buttons
             const buttons = document.querySelectorAll('.tab-button');
             buttons.forEach(button => button.classList.remove('active'));
-    
+
             // Show the selected tab and mark the button as active
             document.getElementById(tabId).style.display = 'block';
             event.target.classList.add('active');
         }
-    
+
         // Show the first tab by default
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.tab-button').click();
         });
+
+
     </script>
     <script src="data_parsing.js"></script>
     <script>
@@ -393,13 +489,13 @@
                 header: true,
                 skipEmptyLines: true,
                 complete: (results) => {
-                    data = results.data; 
+                    data = results.data;
                     console.log(data);
                     displayCharts(data);
                 },
             });
 
-            
+
 
         });
 
@@ -533,17 +629,17 @@
                     //labels: [gamglingData.map(item => item.gameName), nonGamblingData.map(item => item.gameName)],
                     datasets: [{
                         label: 'Gambling flagged games',
-                        data: gamglingData.map(item => ({x:item.weightedScore, y: item.gameName})),
+                        data: gamglingData.map(item => ({ x: item.weightedScore, y: item.gameName })),
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
-                    },{
-                    label: 'non gambling flagged games',
-                        data: nonGamblingData.map(item => ({x:item.weightedScore, y: item.gameName})),
+                    }, {
+                        label: 'non gambling flagged games',
+                        data: nonGamblingData.map(item => ({ x: item.weightedScore, y: item.gameName })),
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
-                }]
+                    }]
                 },
                 options: {
                     indexAxis: 'y'
